@@ -1,4 +1,4 @@
-package me.infinityz.meetup.Utils.Scoreboard;
+package me.infinityz.meetup.Utils.Scoreboard.ScoreboardBase;
 
 import net.minecraft.server.v1_7_R4.*;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author zyuiop
  * Updated by @Monadologie for 1.7.X
  */
-public class ScoreboardNMS {
+public class ScoreboardNMS_v1_7_R4 {
     private boolean created = false;
     private final VirtualTeam[] lines = new VirtualTeam[15];
     private final Player player;
@@ -24,7 +24,7 @@ public class ScoreboardNMS {
      * @param player the player viewing the scoreboard sign
      * @param objectiveName the name of the scoreboard sign (displayed at the top of the scoreboard)
      */
-    public ScoreboardNMS(Player player, String objectiveName) {
+    public ScoreboardNMS_v1_7_R4(Player player, String objectiveName) {
         this.player = player;
         this.objectiveName = objectiveName;
     }
@@ -47,7 +47,7 @@ public class ScoreboardNMS {
     }
 
     /**
-     * Send the packets to remove this scoreboard sign. A destroyed scoreboard sign must be recreated using {@link ScoreboardNMS#create()} in order
+     * Send the packets to remove this scoreboard sign. A destroyed scoreboard sign must be recreated using {@link ScoreboardNMS_v1_7_R4#create()} in order
      * to be used again
      */
     public void destroy() {

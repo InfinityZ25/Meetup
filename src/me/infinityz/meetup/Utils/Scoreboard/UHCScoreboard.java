@@ -1,8 +1,9 @@
 package me.infinityz.meetup.Utils.Scoreboard;
 
+import me.infinityz.meetup.Utils.Scoreboard.ScoreboardBase.ScoreboardNMS_v1_7_R4;
 import org.bukkit.entity.Player;
 
-public class UHCScoreboard extends ScoreboardNMS {
+public class UHCScoreboard extends ScoreboardNMS_v1_7_R4 {
 
     //All the lines are equals to 0 to set them as null
     private int timer_line=0;
