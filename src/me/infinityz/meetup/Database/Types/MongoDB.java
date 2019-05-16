@@ -1,7 +1,6 @@
 package me.infinityz.meetup.Database.Types;
 
 import me.infinityz.meetup.Database.DataInterface;
-import me.infinityz.meetup.Utils.Bossbar;
 
 import java.util.UUID;
 

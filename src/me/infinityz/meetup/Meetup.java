@@ -1,5 +1,10 @@
 package me.infinityz.meetup;
 
+import me.infinityz.meetup.Database.DataInterface;
+import me.infinityz.meetup.Player.PlayerManager;
+import me.infinityz.meetup.Utils.Kits.KitManager;
+import me.infinityz.meetup.Utils.Location.LocationManager;
+import me.infinityz.meetup.Utils.Scenario.ScenarioManager;
 import me.infinityz.meetup.Utils.Scoreboard.ScoreboardManager;
 import me.infinityz.meetup.Utils.Scoreboard.UHCScoreboard;
 import net.md_5.bungee.api.ChatColor;
@@ -16,6 +21,12 @@ public class Meetup extends JavaPlugin implements Listener {
 
     private static Meetup instance;
     private ScoreboardManager scoreboardManager;
+    private DataInterface dataInterface;
+    private ScenarioManager scenarioManager;
+    private LocationManager locationManager;
+    private KitManager kitManager;
+    private PlayerManager playerManager;
+
 
     @Override
     public void onEnable(){
@@ -29,6 +40,18 @@ public class Meetup extends JavaPlugin implements Listener {
     public void onDisable(){
         
     }
+
+    public enum getStates{
+        LOADING, LOBBY, STARTING, INGAME, FINISHED;
+        public static getStates state;
+
+        }
+    public enum getMode{
+        SOLO, TEAM;
+        public static getMode mode;
+        public static int team_size = 2;
+
+        }
 
     public static Meetup getInstance() {
         return instance;
