@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Meetup">
+    <output-path>C:/test/plugins</output-path>
+    <root id="archive" name="Meetup.jar">
+      <element id="module-output" name="Meetup" />
+    </root>
+  </artifact>
+</component>

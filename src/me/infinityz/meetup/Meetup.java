@@ -1,6 +1,7 @@
 package me.infinityz.meetup;
 
-import me.infinityz.meetup.Utils.Scoreboard.ScoreboardNMS;
+import me.infinityz.meetup.Utils.Scoreboard.ScoreboardManager;
+import me.infinityz.meetup.Utils.Scoreboard.UHCScoreboard;
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_7_R4.*;
 import org.bukkit.Bukkit;
@@ -11,15 +12,20 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 
 import static me.infinityz.meetup.Utils.Scoreboard.ScoreboardNMS.setField;
 
 public class Meetup extends JavaPlugin implements Listener {
 
+    private static Meetup instance;
+    private ScoreboardManager scoreboardManager;
+
     @Override
     public void onEnable(){
-
+        instance = this;
+        scoreboardManager = new ScoreboardManager(this);
         Bukkit.getPluginManager().registerEvents(this, this);
 
 
@@ -30,27 +36,44 @@ public class Meetup extends JavaPlugin implements Listener {
         
     }
 
+    public static Meetup getInstance() {
+        return instance;
+    }
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
         final Player p = e.getPlayer();
-        createScoreboard(p, "&e&lSerenix &7&o[UHC]", "&8&m------------------", "&eTimer: &f00:08", "&eBorder:&f 750&8(&c3m&8)", " ", "&eRemaining:&f 41", "  ", "&eTeams Alive:&f 26", "   ", "&7www.serenix.us", "&8&r&8&m------------------");
-        printHoverable(p, "&cWelcome to Serenix UHCMeetup! \n &6Click here to edit your kit", "/vote random", "Vote randomly");
-        p.sendMessage("Hola\n que hace");
+        UHCScoreboard sb = createScoreboard(p, "&e&lSerenix &7&o[UHC]",
+                "&8&m------------------",
+                "&eTimer: &f00:08", "&eBorder:&f 750&8(&c3m&8)",
+                "  ",
+                "&eRemaining:&f 41",
+                "   ",
+                "&eTeams Alive:&f 26",
+                "    ",
+                "&7www.serenix.us",
+                "&8&r&8&m------------------");
+        assert sb != null;
+        sb.setTimer_line(8);
+        sb.setPlayers_alive_line(6);
+
+
+
 
 
     }
 
-    private ScoreboardNMS createScoreboard(Player player, String objectiveName, String... strings){
-        ScoreboardNMS scoreboard = new ScoreboardNMS(player, ChatColor.translateAlternateColorCodes('&', objectiveName));
+    private UHCScoreboard createScoreboard(Player player, String objectiveName, @Nonnull String... strings){
+        if(strings.length<=0)return null;
+        //Create an instance of UHC Scoreboard
+        UHCScoreboard scoreboard = new UHCScoreboard(player, ChatColor.translateAlternateColorCodes('&', objectiveName));
         scoreboard.create();
-        int e = strings.length;
-        for(String s : strings){
-            scoreboard.setLine(e, ChatColor.translateAlternateColorCodes('&', s));
-            e--;
+        //Loop on each of the string values, substract the number of the line from the max length to obtain line number
+        for (int i = 0; i < strings.length; i++) {
+            scoreboard.setLine(strings.length - i, ChatColor.translateAlternateColorCodes('&', strings[i]));
         }
+        //Call the "Own" team packet to set player's name green
         createTeamAndAdd(player, "own");
-
-
+        //Return the scoreboard, there should be nulls
         return scoreboard;
     }
 
